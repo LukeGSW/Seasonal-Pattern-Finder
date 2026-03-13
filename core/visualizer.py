@@ -574,15 +574,19 @@ def plot_ensemble_equity_plotly(
     )
 
     # ── Layout ──
+    # Unpack base layout senza xaxis/yaxis (verranno settati per subplot)
+    base_layout = {k: v for k, v in PLOTLY_LAYOUT.items() if k not in ("xaxis", "yaxis")}
+    _grid = DARK["grid"]
     fig.update_layout(
-        **PLOTLY_LAYOUT,
+        **base_layout,
         height=620,
         title_text=f"Performance Ensemble – {ensemble_name}",
         showlegend=True,
         hovermode='x unified',
-        xaxis2=dict(gridcolor=DARK["grid"], zerolinecolor=DARK["grid"]),
-        yaxis=dict(title="P&L ($)", gridcolor=DARK["grid"], zerolinecolor=DARK["grid"]),
-        yaxis2=dict(title="Drawdown ($)", gridcolor=DARK["grid"], zerolinecolor=DARK["grid"]),
+        xaxis=dict(gridcolor=_grid, zerolinecolor=_grid),
+        xaxis2=dict(gridcolor=_grid, zerolinecolor=_grid),
+        yaxis=dict(title="P&L ($)", gridcolor=_grid, zerolinecolor=_grid),
+        yaxis2=dict(title="Drawdown ($)", gridcolor=_grid, zerolinecolor=_grid),
     )
     # Style subplot titles
     for ann in fig.layout.annotations:
